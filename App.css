@@ -1,10 +1,7 @@
-
 body {
   margin: 0;
 }
 ul {
-  position: relative;
-   z-index: 2;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -24,7 +21,14 @@ h2 {
   padding-left: 0;
   border-top: 1px solid #eee;
 }
-
+/*.chat-list__item::before {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: #eee;
+  transform: scaleY(0.5);
+}*/
 .chat-list__item__avatar {
   width: 60px;
   height: 60px;
@@ -56,7 +60,8 @@ h2 {
   bottom: 0;
   display: flex;
   width: 100%;
-  border-top: 1px solid #eee; 
+  background-color: #fff;
+  border-top: 1px solid #eee;
 }
 .chat-nav__item {
   flex: 1;
@@ -73,25 +78,12 @@ h2 {
   font-size: 12px;
   color: #aaa;
 }
-.new {
-z-index: 0;
-position: absolute;
-height: 500px;
-font-weight: 500px;
-display: flex;
-flex-direction: column;
-background-color: #fff;
-
-}
-.button{
-  border: none;
-  background-color: #fff;
-  padding: 30px 30px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  color: aqua;
+.chat-top{
+  padding:15px;
+  background:black;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
   
-
 }
