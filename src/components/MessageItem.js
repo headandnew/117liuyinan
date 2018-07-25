@@ -21,6 +21,7 @@ export default class MessageItem extends Component {
   handleItemMoreClick = () => {
     const { onItemMoreClick, index } = this.props
     onItemMoreClick && onItemMoreClick(index)
+  
   }
             
   handleSelectItem = () => {

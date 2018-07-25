@@ -1,20 +1,19 @@
 import React  from 'react'
 import './DialogView.css'
 import { DIALOG_SHOW_STATUS } from '../const'
+import { handleAddItem } from '../actions'
 
 export default class DialogView extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super();
+
+    
     this.state = {
       title: '',
       descript: '',
       time: ''
     }
-    this.handleTitleChange = this.handleTitleChange.bind(this)
-    this.handleDescChange = this.handleDescChange.bind(this)
-    this.handleTimeChange = this.handleTimeChange.bind(this)
-    this.handleCloseDialog = this.handleCloseDialog.bind(this)
-    this.handleConfirmAddClick = this.handleConfirmAddClick.bind(this)
+    
   }
 
   handleTitleChange(event) {
@@ -42,16 +41,12 @@ export default class DialogView extends React.Component {
   }
 
   handleConfirmAddClick() {
-    const { title, descript, time } = this.state
-    const { handleAddItem } = this.props
-    if (!title || !descript || !time) {
-      return
-    }
-    handleAddItem && handleAddItem({
-      title,
-      descript,
-      time,
-    })
+   const { title, descript, time } = this.state
+  //  const { handleAddItem } = this.props
+    const { dispatch } =this.props;
+    const action =handleAddItem(title,descript,time);
+    dispatch(action);
+    
   }
 
   renderAddMessageView() {
@@ -101,6 +96,7 @@ export default class DialogView extends React.Component {
   }
 
   render() {
+    
     const { isActive } = this.props
     if (!isActive) { return null }
     return (
