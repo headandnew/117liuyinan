@@ -21,29 +21,10 @@ class Todo extends React.Component {
     super();
 
     this.state = {
-      messages: [
-        {
-          icon: icon1,
-          title: '小年糕',
-          descript: '。。。',
-          time: '7-18 11:14'
-        },
-        {
-          icon: icon2,
-          title: '前端训练营',
-          descript: '大家好',
-          time: '7-18 11:15',
-        },
-        {
-          icon: icon0,
-          title: '小王',
-          descript: 'hi 你好',
-          time: '昨天',
-        }
-      ],
-     // isDialogActive: DIALOG_SHOW_STATUS.HIDE,
+    
+      isDialogActive: DIALOG_SHOW_STATUS.HIDE,
      // handleItemIndex: null,
-     // showMultipleSelect: null,
+      showMultipleSelect: null,
     }
   }
 
@@ -137,7 +118,7 @@ class Todo extends React.Component {
 //添加
   handleAddItem = item => {
     const { dispatch } = this.props;
-    const action =AddTodoCreator(item);
+    const action = AddTodoCreator(item);
     dispatch(action);
    /* const newMessages = this.state.messages.slice();
     newMessages.unshift({
@@ -164,7 +145,7 @@ class Todo extends React.Component {
        
      
       <More
-            messages={this.state.messages}
+            messages={messages}
             showMultipleSelect={this.state.showMultipleSelect}
             onItemClick={this.handItemClick}
             onItemMoreClick={this.handleItemMoreClick}

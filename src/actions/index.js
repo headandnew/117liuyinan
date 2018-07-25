@@ -1,9 +1,9 @@
 import { ADD_TODO, CHANGE_TODO_STATUS } from '../const/ActionTypes'
 
-export function handleAddItem(title,descript,time){
+export function handleAddItem(icon,title,descript,time){
   return {
     type: ADD_TODO,
-    
+    icon,
     title,
     descript,
     time
