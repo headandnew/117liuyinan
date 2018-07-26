@@ -1,0 +1,4 @@
+      state存放在store中，provider提供一个外层封装组件，action是存放在action文件中，
+  当事件触发时，action通过dispatch传入到reducers中进行处理，dispatch中是存放匹配相应action的方法，
+  reducers处理后，将更新的state传入store中，然后通过connect方法传回页面，完成渲染。
+      

@@ -7,18 +7,18 @@ import '../App.css';
 import Nav from '../components/Nav.js'
 // const icon = require('./resource/icon_Good_B-2.png');
 //import More from './components/More.js'
-import icon1 from '../resource/u=2588965882,2465793598&fm=27&gp=0.jpg';
-import icon2 from '../resource/u=2767472474,1074210705&fm=27&gp=0.jpg';
-import icon0 from '../resource/u=3062426313,3718352357&fm=27&gp=0.jpg';
+
 import More from '../components/More.js';
 import { connect } from 'react-redux'
-import { handleAddItem as AddTodoCreator } from '../actions'
+import icon0 from '../resource/u=2767472474,1074210705&fm=27&gp=0.jpg'
+import { bindActionCreators } from 'redux';
+import * as todoActionCreators from '../actions'
 
 
 class Todo extends React.Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
     this.state = {
     
@@ -32,73 +32,67 @@ class Todo extends React.Component {
   //  console.log(message);
  // }
    //更多
-  handleItemMoreClick = (index) => {
+   handleItemMoreClick = (index) => {
+    const { todoActions } = this.props;
+    todoActions.setChatSelectIdx(index)
     this.setState({
       isDialogActive: DIALOG_SHOW_STATUS.SHOW_MORE_BTN,
-      handleItemIndex: index,
     })
-   
   }
   // 删除
   handleDeleteItem = () => {
-    const { handleItemIndex, messages } = this.state
-    const messageTmp = messages.slice()
+    const { compList, handleItemIndex, todoActions } = this.props
+    const messageTmp = compList.messages.slice()
     messageTmp.splice(handleItemIndex, 1)
+    todoActions.acSetChatMessages(messageTmp)
     this.setState({
-      messages: messageTmp,
       isDialogActive: DIALOG_SHOW_STATUS.HIDE,
     })
   }
+/*
   //多选
   handleMultipleClick = () => {
-    const { handleItemIndex } = this.state
+    const { handleItemIndex, dispatch } = this.props
+    dispatch(setChatMultipleSelect([handleItemIndex]))
     this.setState({
-      showMultipleSelect: [handleItemIndex],
       isDialogActive: DIALOG_SHOW_STATUS.HIDE,
     })
-  }
-   
+  }*/
+/*
   handleSelectItem = index => {
-    const { showMultipleSelect } = this.state
+    const { showMultipleSelect, todoActions } = this.props
     const showMultipleSelectTmp = showMultipleSelect.slice()
-    const idx = showMultipleSelectTmp.findIndex(item => item === index)   // 选择数组下标
+    const idx = showMultipleSelectTmp.findIndex(item => item === index)
     if (idx >= 0) {
       showMultipleSelectTmp.splice(idx, 1)
     } else {
       showMultipleSelectTmp.push(index)
     }
-    this.setState({
-      showMultipleSelect: showMultipleSelectTmp,
-    })
+    todoActions.setChatMultipleSelect(showMultipleSelectTmp)
   }
+*/
    //多选删除
-  handleDeleteMultiple = () => {
- const { showMultipleSelect, messages } = this.state
-    const messagesTmp = messages.slice();
-    function sortNumber(a,b) {
-      return b - a
-    }
-    const showMultipleSelectTmp = showMultipleSelect.sort(sortNumber)
+  /* handleDeleteMultiple = () => {
+    const { showMultipleSelect, messages, dispatch } = this.props
+    const messagesTmp = messages.slice()
+    let showMultipleSelectTmp = showMultipleSelect.slice()
+    showMultipleSelectTmp = showMultipleSelectTmp.sort((a, b) => b - a)
     showMultipleSelectTmp.forEach(item => {
       messagesTmp.splice(item, 1)
- 
     })
-  
-    this.setState({
-      messages: messagesTmp,
-      showMultipleSelect: null,
-    })
-    
-  }
-   //置顶
+    dispatch(acSetChatMessages(messagesTmp))
+  }*/
+
   handleSetToTop = () => {
-    const { handleItemIndex, messages } = this.state
-    const messageTmp = messages.slice()
+    const { handleItemIndex, compList,allList, todoActions } = this.props
+    const messageTmp = compList.messages.slice()
     const message = messageTmp.splice(handleItemIndex, 1)
-    messageTmp.unshift(message.pop())
-  
+    messageTmp.unshift({
+      ...message.pop(),
+      isToTop: true,
+    })
+    todoActions.acSetChatMessages(messageTmp)
     this.setState({
-      messages: messageTmp,
       isDialogActive: DIALOG_SHOW_STATUS.HIDE,
     })
   }
@@ -116,20 +110,25 @@ class Todo extends React.Component {
     })
   }
 //添加
-  handleAddItem = item => {
-    const { dispatch } = this.props;
-    const action = AddTodoCreator(item);
-    dispatch(action);
-   /* const newMessages = this.state.messages.slice();
-    newMessages.unshift({
-      icon: icon2,
-      ...item,
-    });
-    this.setState({
-      messages: newMessages,
-      isDialogActive: DIALOG_SHOW_STATUS.HIDE,
-    });*/
-  }
+handleAddItem = item => {
+  const { compList,todoActions } = this.props;
+  const newMessages = compList.messages.slice();
+  let firstNotTopIdx = -1;
+  newMessages.forEach((item, idx) => {
+    if (item.isToTop) {
+      firstNotTopIdx = idx
+    }
+  });
+  newMessages.splice(firstNotTopIdx + 1, 0, {
+    icon: icon0,
+    isToTop: false,
+    ...item,
+  });
+  todoActions.acSetChatMessages(newMessages)
+  this.setState({
+    isDialogActive: DIALOG_SHOW_STATUS.HIDE,
+  });
+}
 
  //更新后的界面
  
@@ -137,7 +136,10 @@ class Todo extends React.Component {
   
 
   render() {
-      const { messages,dispatch }=this.props;
+    
+      const { compList }=this.props;
+     
+ 
     return (
       <div>
           
@@ -145,12 +147,12 @@ class Todo extends React.Component {
        
      
       <More
-            messages={messages}
+            messages={compList.messages}
             showMultipleSelect={this.state.showMultipleSelect}
             onItemClick={this.handItemClick}
             onItemMoreClick={this.handleItemMoreClick}
             onSelectItem={this.handleSelectItem}
-            dispatch={dispatch}
+           
             />
    <Delebtn showMultipleSelect={this.state.showMultipleSelect}
        onDeleteMultiple={this.handleDeleteMultiple}
@@ -164,7 +166,7 @@ class Todo extends React.Component {
           handleDeleteItem={this.handleDeleteItem}
           handleSetToTop={this.handleSetToTop}
           handleMultipleClick={this.handleMultipleClick}
-          dispatch={dispatch}
+      
           />
          
       </div>
@@ -172,9 +174,29 @@ class Todo extends React.Component {
   }
   
 }
-function mapStateToProps(state,ownProp){
-    // state.messages;
-  const props= state;
-    return props;
+
+/*
+function mapStateToProps(state) {
+  return {
+    ...state
   }
-export default connect(mapStateToProps)(Todo);
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch
+  }
+}*/
+function mapStateToProps(state,ownProps){
+  // state.list;
+  const { allList, compList } = state;
+  return { allList, compList };
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    todoActions: bindActionCreators(todoActionCreators, dispatch)
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Todo);

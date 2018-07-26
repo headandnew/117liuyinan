@@ -1,21 +1,17 @@
-import { ADD_TODO, CHANGE_TODO_STATUS } from '../const/ActionTypes'
 
-export function handleAddItem(icon,title,descript,time){
-  return {
-    type: ADD_TODO,
-    icon,
-    title,
-    descript,
-    time
+import * as ActionTypes from '../const/ActionTypes'
 
+export const acSetChatMessages = messages => ({
+  type: ActionTypes.SET_CHAT_MESSAGES,
+  messages,
+})
 
-  }
-}
+export const setChatSelectIdx = idx => ({
+  type: ActionTypes.SET_CHAT_MESSAGE_SELECT_IDX,
+  idx,
+})
 
-export function changeStatus(idx, isCompleted){
-  return {
-    type: CHANGE_TODO_STATUS,
-    idx,
-    isCompleted
-  }
-}
+export const setChatMultipleSelect = messages => ({
+  type: ActionTypes.SET_CHAT_MULTIPLE_SELECT,
+  messages,
+})

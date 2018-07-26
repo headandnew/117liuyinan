@@ -1,52 +1,56 @@
 import React  from 'react'
 import './DialogView.css'
 import { DIALOG_SHOW_STATUS } from '../const'
-import { handleAddItem } from '../actions'
 
 export default class DialogView extends React.Component {
- /* constructor() {
-    super();
-
-    
-     this.state = {
+  constructor(props) {
+    super(props)
+    this.state = {
       title: '',
       descript: '',
-      time: '',
+      time: ''
     }
-    
+    this.handleTitleChange = this.handleTitleChange.bind(this)
+    this.handleDescChange = this.handleDescChange.bind(this)
+    this.handleTimeChange = this.handleTimeChange.bind(this)
+    this.handleCloseDialog = this.handleCloseDialog.bind(this)
+    this.handleConfirmAddClick = this.handleConfirmAddClick.bind(this)
   }
-*/
-  handleTitleChange = event => {
+
+  handleTitleChange(event) {
     this.setState({
       title: event.target.value
     })
   }
 
-  handleDescChange = event => {
+  handleDescChange(event) {
     this.setState({
       descript: event.target.value
     })
   }
 
-  handleTimeChange = event => {
+  handleTimeChange(event) {
     this.setState({
       time: event.target.value
     })
   }
 
-  handleCloseDialog=()=> {
+  handleCloseDialog() {
     const { onCloseClick } = this.props
     onCloseClick && onCloseClick(false)
-    
   }
 
-  handleConfirmAddClick=() =>{
-   const { title, descript, time } = this.state
-  //  const { handleAddItem } = this.props
-    const { dispatch } =this.props;
-    const action =handleAddItem(title,descript,time);
-    dispatch(action);
-    
+  handleConfirmAddClick() {
+    const { title, descript, time } = this.state
+    const { handleAddItem } = this.props
+    if (!title || !descript || !time) {
+      return
+    }
+    handleAddItem && handleAddItem({
+      title,
+      descript,
+      time,
+    })
   }
 
   renderAddMessageView() {
@@ -67,7 +71,7 @@ export default class DialogView extends React.Component {
   }
 
   renderMoreBtnView() {
-    const { handleDeleteItem, handleSetToTop, handleMultipleClick, } = this.props
+    const { handleDeleteItem, handleSetToTop, handleMultipleClick } = this.props
     return (
       <div className="ViewContent">
         <div className="MoreBtnItem" onClick={handleSetToTop}>置顶</div>
@@ -96,7 +100,6 @@ export default class DialogView extends React.Component {
   }
 
   render() {
-    
     const { isActive } = this.props
     if (!isActive) { return null }
     return (
