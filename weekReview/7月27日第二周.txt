@@ -1,0 +1,16 @@
+          redux
+      
+                    store
+       action ， reducer ，dispatch
+      先是createStore，store只有一个，所有的state都存放在store中
+     然后引入一个中间件叫logger，可以查看action，和action前后state的状态，这个应该在rootreducer里。
+     然后在组件外部<Provider>组件封装一下，在组件内部写好reducer和action就好了。
+
+  action最好定义为常量，定义字符串容易写错，action文件中存放所有的action，type属性是必须的，其他属性就是action根据需求所要传的参数
+  reducer中存放对每个action的处理方法，然后将更新后的state返回到store中，然后通过mapStateToProps方法将数据传给组件，完成页面渲染
+  当action很多时，需要将action放在一起合成一个组件，actionCreators，正常的action是需要dispatch来传递的，如果将action合到一起，就不需要写dispatch，写每个action了
+  bindactioncreator方法就是将action合到一起，导入组件时只要导入一个就够了，
+  当页面很多或者功能很多时，可以按照需求将reducer分成多个，用combineReducers方法，每个reducer中没有数据耦合，便于后期代码维护，而且逻辑清晰。
+  
+
+                                     
