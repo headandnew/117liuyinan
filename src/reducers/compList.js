@@ -1,8 +1,4 @@
 import * as ActionTypes from '../const/ActionTypes'
-import icon1 from '../resource/u=2588965882,2465793598&fm=27&gp=0.jpg';
-import icon2 from '../resource/u=2767472474,1074210705&fm=27&gp=0.jpg';
-import icon0 from '../resource/u=3062426313,3718352357&fm=27&gp=0.jpg';
-import { DIALOG_SHOW_STATUS } from '../const';
 
 
 
@@ -12,49 +8,34 @@ import { DIALOG_SHOW_STATUS } from '../const';
 
                                
 
-function compList(state={
-messages: [
-    {
-      icon: icon1,
-      title: '小年糕',
-      descript: '。。。',
-      time: '7-18 11:14',
-      isToTop: false,
-    },
-    {
-      icon: icon2,
-      title: '前端训练营',
-      descript: '大家好',
-      time: '7-18 11:15',
-      isToTop: false,
-    },
-    {
-      icon: icon0,
-      title: '小王',
-      descript: 'hi 你好',
-      time: '昨天',
-      isToTop: false,
-    }
-  ],
-  handleItemIndex: null,
-  showMultipleSelect: null,              
-},action) {
-
-
-  switch (action.type) {
-    case ActionTypes.SET_CHAT_MESSAGES:
-      return { ...state,
-        messages: action.messages,
-        showMultipleSelect: null,
-      }
+const init_state= {fixedMsg : {
+ 
+  xueyuanbianhao: '学员编号',
+  zhuangtai: '在学课程',
+  kaikeshijian: '入学时间',
+  jiaoshi:'历史付费额',
+  shangkelv:'累计学习天数',
+  zuoyetijiaolv:'最后登录日期',
   
-    case ActionTypes.SET_CHAT_MULTIPLE_SELECT:
-      return { ...state,
-        showMultipleSelect: action.messages,
-      }
-    default:
-      return state
-  }
-}
+},
+ personalMsg:{
 
-export default compList
+ 
+  xueyuanbianhao: 'MID3309000002',
+  zhuangtai: '摄影课 绘画课',
+  kaikeshijian: '2018-03-30',
+  jiaoshi:'987',
+  shangkelv:'876天',
+  zuoyetijiaolv:'2018-03-30',
+  
+
+ }
+}
+export default function compList(state = init_state, action){
+  switch(action.type){
+    default:
+    return state;
+    
+  }
+      
+}

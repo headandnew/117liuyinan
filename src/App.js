@@ -1,11 +1,14 @@
 import React from 'react';
-import Todo from './container/Todo';
-import './App.css';
+import Op from './container/Op.js';
+
 import { createStore,applyMiddleware,compose } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer  from './reducers'
 import { createLogger } from 'redux-logger';
+import 'antd/dist/antd.css';
+
 const logger = createLogger();
+
 
 
 const store = createStore(
@@ -19,7 +22,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Todo />
+        <Op />
       </Provider>
     )
   }
