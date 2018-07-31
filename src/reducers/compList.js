@@ -1,13 +1,5 @@
 import * as ActionTypes from '../const/ActionTypes'
 
-
-
-
-
-
-
-                               
-
 const init_state= {fixedMsg : {
  
   xueyuanbianhao: '学员编号',

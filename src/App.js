@@ -7,9 +7,8 @@ import rootReducer  from './reducers'
 import { createLogger } from 'redux-logger';
 import 'antd/dist/antd.css';
 
+
 const logger = createLogger();
-
-
 
 const store = createStore(
   rootReducer,
@@ -19,11 +18,16 @@ const store = createStore(
 )
 
 export default class App extends React.Component {
+
+
+
   render() {
+
     return (
       <Provider store={store}>
-        <Op />
-      </Provider>
+       <Op />
+      </Provider> 
+   
     )
   }
 }

@@ -1,17 +1,22 @@
 
 import * as ActionTypes from '../const/ActionTypes'
 
-export const acSetChatMessages = messages => ({
-  type: ActionTypes.SET_CHAT_MESSAGES,
-  messages,
-})
 
-export const setChatSelectIdx = idx => ({
-  type: ActionTypes.SET_CHAT_MESSAGE_SELECT_IDX,
-  idx,
-})
+ function fetchGithubUser(userName,next){
+   next({
+     type:'${}_REQ'
+   })
+  
+  axios({
+    method:'GET',
+    url:'https://api.github.com/users/${inputVal}',
 
-export const setChatMultipleSelect = messages => ({
-  type: ActionTypes.SET_CHAT_MULTIPLE_SELECT,
-  messages,
-})
+   
+ }).then(res=>{
+   console.log(res);
+ }).catch(err=>{
+   console.log(err);
+ });
+
+
+ }

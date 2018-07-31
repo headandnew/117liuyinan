@@ -3,6 +3,7 @@ import {Icon} from 'antd';
 
 import * as ActionTypes from '../const/ActionTypes'
 import { DIALOG_SHOW_STATUS } from '../const';
+/*
 const init_state= {dataSource : [{
   key: '1',
   banji: '高级班',
@@ -88,22 +89,89 @@ const init_state= {dataSource : [{
   title: '上课率',
   dataIndex: 'shangkelv',
   key: 'shangkelv',
+  render:text=>{
+    let num1=parseInt(text.split("/")[0],10);
+    let num2=parseInt(text.split("/")[1],10);
+    let num=num1/num2;
+    if(num<0.8){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>0.95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
+
+  
 }, {
   title: '作业提交率',
   dataIndex: 'zuoyetijiaolv',
   key: 'zuoyetijiaolv',
+  render:text=>{
+    let num=parseInt(text, 10);
+    if(num<80){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
+  
 }, {
   title: '被点评情况',
   dataIndex: 'beidianpingqingkuang',
   key: 'beidianpingqingkuang',
+  render:text=>{
+    let num=parseInt(text, 10);
+    if(num<80){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }, {
   title: '打卡率',
   dataIndex: 'dakalv',
   key: 'dakalv',
+  render:text=>{
+    let num1=parseInt(text.split("/")[0],10);
+    let num2=parseInt(text.split("/")[1],10);
+    let num=num1/num2;
+    if(num<0.8){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>0.95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }, {
   title: '满意度',
   dataIndex: 'manyidu',
   key: 'manyidu',
+  render:text=>{
+    let num=parseInt(text, 10);
+    if(num<80){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }],
 
  dataSource1 : [{
@@ -140,22 +208,90 @@ const init_state= {dataSource : [{
   title: '上课率',
   dataIndex: 'shangkelv',
   key: 'shangkelv',
+  render:text=>{
+    let num1=parseInt(text.split("/")[0],10);
+    let num2=parseInt(text.split("/")[1],10);
+    let num=num1/num2;
+    if(num<0.8){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>0.95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }, {
   title: '作业提交率',
   dataIndex: 'zuoyetijiaolv',
   key: 'zuoyetijiaolv',
+  render:text=>{
+    let num1=parseInt(text.split("/")[0],10);
+    let num2=parseInt(text.split("/")[1],10);
+    let num=num1/num2;
+    if(num<0.8){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>0.95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }, {
   title: '被点评情况',
   dataIndex: 'beidianpingqingkuang',
   key: 'beidianpingqingkuang',
+  render:text=>{
+    let num1=parseInt(text.split("/")[0],10);
+    let num2=parseInt(text.split("/")[1],10);
+    let num=num1/num2;
+    if(num<0.8){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>0.95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }, {
   title: '打卡率',
   dataIndex: 'dakalv',
   key: 'dakalv',
+  render:text=>{
+    let num1=parseInt(text.split("/")[0],10);
+    let num2=parseInt(text.split("/")[1],10);
+    let num=num1/num2;
+    if(num<0.8){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>0.95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }, {
   title: '满意度',
   dataIndex: 'manyidu',
   key: 'manyidu',
+  render:text=>{
+    let num=parseInt(text, 10);
+    if(num<80){
+    return <span className="Red">{text}</span>
+    }
+    else if(num>95){
+    return <span className="Orange">{text}</span>
+    }
+    else{
+    return <span>{text}</span>
+    }
+    }
 }]
 }
 export default function allList(state = init_state, action){
@@ -165,4 +301,24 @@ export default function allList(state = init_state, action){
     
   }
       
+}*/
+const init_state = {
+  learningLessonsList: [],
+  historyLessonsList: []
 }
+
+export default function tablelist(state = init_state, action) {
+  switch (action.type) {
+    case ActionTypes.FETCH_LESSONINFO_SUC:
+
+      let learningLessonsList = action.data.currentLessonsList;
+      let historyLessonsList1 = action.data.historyLessonsList;
+    
+      return Object.assign({}, state, { learningLessonsList, historyLessonsList:historyLessonsList1 })
+    case ActionTypes.FETCH_USERINFO_SUC:
+      let historyLessonsList = action.next.data.historyLessonsList;
+      return Object.assign({}, state, { historyLessonsList })
+    default:
+      return state;
+  }
+} 

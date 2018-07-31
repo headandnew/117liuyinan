@@ -3,15 +3,47 @@ import '../App.css';
 import { connect } from 'react-redux'
 import Header from '../components/Header/Header';
 import TabBar from '../components/TabBar/TabBar';
-
+import axios from 'axios';
+import * as api from '../api/index'
 
 
 
 
 
 class Op extends  React.Component{
+      constructor(){
+          super();
+          this.state = {
+              userData:[]
+             
+          }
+      }
+    componentWillMount(){
+
+        axios({
+          method:'POST',
+          headers: {'Content-Type':'application/x-www-form-urlencoded'},
+          url:'http://xly-wkop.xiaoniangao.cn/getUserInfo',
+          data:{
+           mid:'MID330900002'
+          } 
+       }).then(res=>{
+         console.log(res);
+         this.setState({userData: res.data.data})
+         console.log(this.state.userData)
+     
+       }).catch(err=>{
+         console.log(err);
+       });
+      
+      }
 
 
+      componentDidMount() {
+        const { dispatch } = this.props;
+       api.fetchlesson(dispatch);
+        api.fetchlesson(dispatch);
+        }
     render(){
 
 
@@ -19,10 +51,9 @@ class Op extends  React.Component{
          return(
 
              <div>
-              <Header  fixedMsg={this.props.compList.fixedMsg} 
-                       personalMsg={this.props.compList.personalMsg}
+              <Header  userData={this.state.userData}          
               />
-              <TabBar dataSource={this.props.allList.dataSource}
+              <TabBar dataSource={this.props.allList.learningLessonsList}
                       dataSource1={this.props.allList.dataSource1}
                       columns={this.props.allList.columns}
                       columns1={this.props.allList.columns1}/>

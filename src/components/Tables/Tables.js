@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Icon, Divider } from 'antd';
+import { Table } from 'antd';
 import './Tables.css'
 
 
@@ -19,17 +19,6 @@ export default class Tables extends React.Component{
                    <strong>历史课程</strong>
                    <Table dataSource={dataSource1} columns={columns1} />
                 </div>
-
-
-
-
-
-
-
-        )
-
-
-
-    }
-
+                )
+             }
     }

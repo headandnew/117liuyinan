@@ -5,8 +5,6 @@ import Tables from '../Tables/Tables';
 import '../TabBar/TabBar'
 
 
-
-
 export default class TabBar extends React.Component{
 
 
