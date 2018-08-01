@@ -3,60 +3,39 @@ import '../App.css';
 import { connect } from 'react-redux'
 import Header from '../components/Header/Header';
 import TabBar from '../components/TabBar/TabBar';
-import axios from 'axios';
-import * as api from '../api/index'
-
-
-
+import * as actionCreators from '../actions'; 
+import { bindActionCreators } from 'redux';
 
 
 class Op extends  React.Component{
-      constructor(){
-          super();
-          this.state = {
-              userData:[]
-             
-          }
-      }
-    componentWillMount(){
-
-        axios({
-          method:'POST',
-          headers: {'Content-Type':'application/x-www-form-urlencoded'},
-          url:'http://xly-wkop.xiaoniangao.cn/getUserInfo',
-          data:{
-           mid:'MID330900002'
-          } 
-       }).then(res=>{
-         console.log(res);
-         this.setState({userData: res.data.data})
-         console.log(this.state.userData)
-     
-       }).catch(err=>{
-         console.log(err);
-       });
-      
-      }
-
-
+  
+  
       componentDidMount() {
-        const { dispatch } = this.props;
-       api.fetchlesson(dispatch);
-        api.fetchuser(dispatch);
+        const { Actions } = this.props;
+        const mid = 1;
+        const id = 2;
+        Actions.fetchUserInfo(mid)
+        Actions.fetchLessonInfo(mid)
+        Actions.fetchStudentInfo(id)
+        Actions.fetchLearnInfo(id)
         }
     render(){
-        const { todoActions,dispatch } = this.props;
-   //console.log(this.props.allList.learningLessonsList)
-
+ const{ classState,studentMessage,tableColumns}=this.props
          return(
                      
              <div>
-              <Header  userData={this.state.userData}          
+              <Header   userMsg={classState.userMsg}          
               />
-              <TabBar state={this.props}
-                     
-                    
-                      />
+              <TabBar 
+              LessonsList={studentMessage.LessonsList} 
+              historyLessonsList={studentMessage.historyLessonsList} 
+              StudentList={studentMessage.StudentList}
+              LearnList={studentMessage.LearnList}
+              basicMsg={classState.basicMsg}
+              columns1={tableColumns.columns1}
+              columns2={tableColumns.columns2}
+              columns3={tableColumns.columns3} 
+              />
              </div>   
          )
     }
@@ -64,8 +43,14 @@ class Op extends  React.Component{
 }
 function mapStateToProps(state,ownProps){
     // state.list;
-    const { allList, compList } = state;
-    return { allList, compList };
+    const {   studentMessage,classState,tableColumns} = state;
+    return {  studentMessage,classState,tableColumns};
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+      Actions: bindActionCreators(actionCreators, dispatch)
+      // dispatch
+    }
   }
   
-export default connect(mapStateToProps)(Op);
+export default connect(mapStateToProps,mapDispatchToProps)(Op);

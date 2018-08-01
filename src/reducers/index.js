@@ -1,11 +1,16 @@
 import { combineReducers } from 'redux';
-import allList from './allList';
-import compList from './compList';
+
+import studentMessage from './studentMessage';
+import classState from './classState';
+import tableColumns from './tableColumns';
 
 
 export default combineReducers({
-  allList,
-  compList
+ 
+  studentMessage,
+  classState,
+  tableColumns
+  
 });
 
 

@@ -1,22 +1,50 @@
+import * as ActionTypes from '../const/ActionTypes';
 
-import * as ActionTypes from '../const/ActionTypes'
+export function fetchUserInfo(mid) {
+  return {
+    SERVER_API: {
+      type: ActionTypes.FETCH_USER_INFO,
+      endpoint: '/getUserInfo',
+      params: {
+        mid
+      }
+    }
+  }
+}
 
+export function fetchLessonInfo(mid) {
+  return {
+    SERVER_API: {
+      type: ActionTypes.FETCH_LESSON_INFO,
+      endpoint: '/getLessonInfo',
+      params: {
+        mid
+      }
+    }
+  }
+}
 
- function fetchGithubUser(userName,next){
-   next({
-     type:'${}_REQ'
-   })
-  
-  axios({
-    method:'GET',
-    url:'https://api.github.com/users/${inputVal}',
+export function fetchStudentInfo(id) {
+    return {
+      SERVER_API: {
+        type: ActionTypes.FETCH_STUDENT_INFO,
+        endpoint: '/getStudentList',
+        params: {
+          id
+        }
+      }
+    }
+}
 
-   
- }).then(res=>{
-   console.log(res);
- }).catch(err=>{
-   console.log(err);
- });
+  export function fetchLearnInfo(id) {
+    return {
+      SERVER_API: {
+        type: ActionTypes.FETCH_LEARN_INFO,
+        endpoint: '/getClassInfo',
+        params: {
+            id
+        }
+      }
+    }
+}
 
-
- }
