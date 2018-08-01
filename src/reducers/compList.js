@@ -1,33 +1,38 @@
 import * as ActionTypes from '../const/ActionTypes'
 
-const init_state= {fixedMsg : {
- 
-  xueyuanbianhao: '学员编号',
-  zhuangtai: '在学课程',
-  kaikeshijian: '入学时间',
-  jiaoshi:'历史付费额',
-  shangkelv:'累计学习天数',
-  zuoyetijiaolv:'最后登录日期',
-  
-},
- personalMsg:{
+const initState = {
+  dataSource: [{
+      classInfo: {
+          id:'',
+          name:''
+      },
+      status: '',
+      startTime: '',  //开始时间
+      teacherInfo:{
+          id:'',
+          mid:'',
+          nick:'',
+          realName:'',
+          wxCode:''
+      },
+      enterRate:'',  //
+      signRate:'',  //上课率
+      homeworkSubmitRate:'',  
+      beCommenttedRate:'',
+      satisfyRate:'',  //满意度
+  }]
+};
 
- 
-  xueyuanbianhao: 'MID3309000002',
-  zhuangtai: '摄影课 绘画课',
-  kaikeshijian: '2018-03-30',
-  jiaoshi:'987',
-  shangkelv:'876天',
-  zuoyetijiaolv:'2018-03-30',
-  
-
- }
-}
-export default function compList(state = init_state, action){
-  switch(action.type){
-    default:
-    return state;
-    
+export default function todoList(state = initState, action) {
+  const a = `${ActionTypes.FETCH_CLASS}_SUC`;
+  switch (action.type) {
+      case a:
+          const newState = {...state}; 
+          let newData = state.dataSource.slice();
+          newData = action.data.data.currentLessonsList;
+          newState.dataSource = newData;
+          return newState;
+      default:
+          return state;
   }
-      
 }

@@ -2,57 +2,58 @@ import React,{Component} from 'react'
 import axios from 'axios';
 import * as ActionTypes from '../const/ActionTypes';
 
-export function fetchlesson( next ) {
-  next({
-    type: ActionTypes.FETCH_LESSONINFO_REQ
-  });
-  
-  axios({
-      method: 'POST',
-      url: `http://xly-wkop.xiaoniangao.cn/getLessonInfo`,
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data:{
-        mid:'98858'
-      }
-    }).then(res => {
-      console.log(res.data.data);
-      next({
-        type: ActionTypes.FETCH_LESSONINFO_SUC,
-        data: res.data.data
+
+
+
+function fetchuser(next){
+    next({
+        type: `${ActionTypes.FETCH_USER}_REQ`
       });
+    axios({
+        method: 'post',
+        url: ' http://xly-wkop.xiaoniangao.cn/getUserInfo',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        data: {
+            mid:'1',
+        }
+    }).then(res => {
+        next({
+            type: `${ActionTypes.FETCH_USER}_SUC`,
+            data: res.data
+        });
     })
     .catch(err => {
-      console.log(err);
-      next({
-        type: ActionTypes.FETCH_LESSONINFO_FAI
-      });
+        next({
+            type: `${ActionTypes.FETCH_USER}_FAI`
+        });
     });
-  }
+}
 
- export function fetchuser( next ) {
-      next({
-        type: ActionTypes.FETCH_USERINFO_REQ
-      });
-    axios.post({
-      method: 'POST',
-      url: `'http://xly-wkop.xiaoniangao.cn/getUserInfo'`,
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    }
-      
-    )
-    .then(res =>  {
-      console.log(res);
-      next({
-        type: ActionTypes.FETCH_USERINFO_SUC,
-        data: res.data
-      });
+function fetchlesson(next){
+    next({
+        type: `${ActionTypes.FETCH_CLASS}_REQ`
+    });    
+    axios({
+        method: 'post',
+        url: ' http://xly-wkop.xiaoniangao.cn/getLessonInfo',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        data: {
+            mid:'1',
+        }
+    }).then(res => {
+        next({
+            type: `${ActionTypes.FETCH_CLASS}_SUC`,
+            data: res.data
+        });
     })
-    .catch( err => {
-      console.log(err);
-      next({
-        type: ActionTypes.FETCH_USERINFO_FAI,
-      });
+    .catch(err => {
+        next({
+            type: `${ActionTypes.FETCH_CLASS}_FAI`
+        });
     });
-  }
+}
 
-
+export {
+    fetchlesson,
+    fetchuser
+}

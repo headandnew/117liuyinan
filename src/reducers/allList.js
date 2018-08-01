@@ -3,8 +3,148 @@ import {Icon} from 'antd';
 
 import * as ActionTypes from '../const/ActionTypes'
 import { DIALOG_SHOW_STATUS } from '../const';
-/*
-const init_state= {dataSource : [{
+
+const initState= {dataSource : [{
+  classInfo: {
+    id:'',
+    name:''
+},
+status: '',
+startTime: '',  //开始时间
+teacherInfo:{
+    id:'',
+    mid:'',
+    nick:'',
+    realName:'',
+    wxCode:''
+},
+enterRate:'',  //
+signRate:'',  //上课率
+homeworkSubmitRate:'',  
+beCommenttedRate:'',
+satisfyRate:'',  //满意度
+}], 
+columns:[{
+title: '班级',
+dataIndex: 'classInfo.name',
+key: 'class',
+align:'center',
+render:text => <div><Icon type="exclamation" />{text}</div>
+}, {
+title: '课程状态',
+dataIndex: 'status',
+key: 'course',
+align:'center',
+render:text => {
+    if(text === 0){
+        return <div>进行中</div>
+    }else{
+        return <div>已结束</div>
+    }
+}
+}, {
+title: '开课时间',
+dataIndex: 'startTime',
+key: 'openTime',
+align:'center',
+},{
+title: '教学组负责人',
+dataIndex: 'teacherInfo.nick',
+key: 'groupPeople',
+align:'center',
+render:text => <div><Icon type="link" />{text}</div>
+},{
+title: '上课率',
+dataIndex: 'enterRate',
+key: 'classRate',
+align:'center',
+render:text=>{
+  let num1=parseInt(text.split("/")[0],10);
+  let num2=parseInt(text.split("/")[1],10);
+  let num=num1/num2;
+  if(num<0.8){
+  return <span className="Red">{text}</span>
+  }
+  else if(num>0.95){
+  return <span className="Orange">{text}</span>
+  }
+  else{
+  return <span>{text}</span>
+  }
+  }
+},{
+title: '作业提交率',
+dataIndex: 'homeworkSubmitRate',
+key: 'subRate',
+align:'center',
+render:text=>{
+  let num=parseInt(text, 10);
+  if(num<80){
+  return <span className="Red">{text}</span>
+  }
+  else if(num>95){
+  return <span className="Orange">{text}</span>
+  }
+  else{
+  return <span>{text}</span>
+  }
+  }
+},{
+title: '被点评情况',
+dataIndex: 'beCommenttedRate',
+key: 'commentSit',
+align:'center',
+render:text=>{
+  let num=parseInt(text, 10);
+  if(num<80){
+  return <span className="Red">{text}</span>
+  }
+  else if(num>95){
+  return <span className="Orange">{text}</span>
+  }
+  else{
+  return <span>{text}</span>
+  }
+  }
+},{
+title: '打卡率',
+dataIndex: 'signRate',
+key: 'punchRate',
+align:'center',
+render:text=>{
+  let num1=parseInt(text.split("/")[0],10);
+  let num2=parseInt(text.split("/")[1],10);
+  let num=num1/num2;
+  if(num<0.8){
+  return <span className="Red">{text}</span>
+  }
+  else if(num>0.95){
+  return <span className="Orange">{text}</span>
+  }
+  else{
+  return <span>{text}</span>
+  }
+  }
+},{
+title: '满意度',
+dataIndex: 'satisfyRate',
+key: 'satDegree',
+align:'center',
+render:text=>{
+  let num=parseInt(text, 10);
+  if(num<80){
+  return <span className="Red">{text}</span>
+  }
+  else if(num>95){
+  return <span className="Orange">{text}</span>
+  }
+  else{
+  return <span>{text}</span>
+  }
+  }
+}],
+};
+  /*
   key: '1',
   banji: '高级班',
   zhuangtai: '进行中',
@@ -302,23 +442,21 @@ export default function allList(state = init_state, action){
   }
       
 }*/
-const init_state = {
+/*const init_state = {
   learningLessonsList: [],
   historyLessonsList: []
 }
-
-export default function tablelist(state = init_state, action) {
+*/
+export default function todoList(state = initState, action) {
+  const a = `${ActionTypes.FETCH_CLASS}_SUC`;
   switch (action.type) {
-    case ActionTypes.FETCH_LESSONINFO_SUC:
-
-      let learningLessonsList = action.data.currentLessonsList;
-      let historyLessonsList1 = action.data.historyLessonsList;
-    
-      return Object.assign({}, state, { learningLessonsList, historyLessonsList:historyLessonsList1 })
-    case ActionTypes.FETCH_USERINFO_SUC:
-      let historyLessonsList = action.next.data.historyLessonsList;
-      return Object.assign({}, state, { historyLessonsList })
-    default:
-      return state;
+      case a:
+          const newState = {...state}; 
+          let newData = state.dataSource.slice();
+          newData = action.data.data.historyLessonsList;
+          newState.dataSource = newData;
+          return newState;
+      default:
+          return state;
   }
-} 
+}

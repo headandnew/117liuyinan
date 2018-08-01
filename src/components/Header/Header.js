@@ -24,7 +24,7 @@ export default class Header extends React.Component{
     render(){
              const {userData} =this.props;
         return(<div className="header-wrap">
-        <Avatar size="large" src={require('../../resource/u=2588965882,2465793598&fm=27&gp=0.jpg')} style={{width:"100px",height:"100px"}}/>
+        <Avatar size="large" src={userData.hurl} style={{width:"100px",height:"100px"}}/>
         <div className="head">三班人</div>
         <div className="header-content-left">
         {this.renderHeadMsg()}

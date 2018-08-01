@@ -42,21 +42,21 @@ class Op extends  React.Component{
       componentDidMount() {
         const { dispatch } = this.props;
        api.fetchlesson(dispatch);
-        api.fetchlesson(dispatch);
+        api.fetchuser(dispatch);
         }
     render(){
-
-
+        const { todoActions,dispatch } = this.props;
+   //console.log(this.props.allList.learningLessonsList)
 
          return(
-
+                     
              <div>
               <Header  userData={this.state.userData}          
               />
-              <TabBar dataSource={this.props.allList.learningLessonsList}
-                      dataSource1={this.props.allList.dataSource1}
-                      columns={this.props.allList.columns}
-                      columns1={this.props.allList.columns1}/>
+              <TabBar state={this.props}
+                     
+                    
+                      />
              </div>   
          )
     }

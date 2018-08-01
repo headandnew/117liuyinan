@@ -10,14 +10,16 @@ export default class Tables extends React.Component{
 
 
     render(){
-      
-          const { dataSource, dataSource1,columns,columns1}=this.props;
+      const { state } = this.props;
+          
         return( 
                 <div>
                    <strong>在学课程</strong>
-                   <Table dataSource={dataSource} columns={columns} />
+                   <Table dataSource={state.compList.dataSource} columns={state.allList.columns}
+                   bordered pagination={false} />
                    <strong>历史课程</strong>
-                   <Table dataSource={dataSource1} columns={columns1} />
+                   <Table dataSource={state.allList.dataSource} columns={state.allList.columns}
+                    bordered />
                 </div>
                 )
              }
