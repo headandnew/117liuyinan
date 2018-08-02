@@ -1,7 +1,7 @@
 import React from 'react';
 import '../ButtonBox/ButtonBox.css';
 import { Button } from 'antd';
-
+import { Link } from 'react-router'
 
 
 export default class ButtonBox extends React.Component{
@@ -18,7 +18,7 @@ export default class ButtonBox extends React.Component{
                        <Button>绘画课</Button>
                    </div>
                    <div className="button_right">
-                       <Button>返回</Button>
+                   <Link  to="/student"><Button>返回</Button></Link>  
                    </div>
                    
 

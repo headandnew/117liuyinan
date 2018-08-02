@@ -1,13 +1,15 @@
 import React from 'react';
 import '../App.css';
 import { connect } from 'react-redux'
-import Header from '../components/Header/Header';
-import TabBar from '../components/TabBar/TabBar';
+import ButtonBox from '../components/ButtonBox/ButtonBox'
+import Search from '../components/Search/Search'
+import StudentMessage from '../components/StudentMessage/StudentMessage'
+
 import * as actionCreators from '../actions'; 
 import { bindActionCreators } from 'redux';
 
 
-class Op extends  React.Component{
+class Student extends  React.Component{
   
   
       componentDidMount() {
@@ -18,27 +20,15 @@ class Op extends  React.Component{
         Actions.fetchLessonInfo(mid)
         Actions.fetchStudentInfo(id)
         Actions.fetchLearnInfo(id)
-        Actions.fetchSatisify(mid)
         }
     render(){
  const{ classState,studentMessage,tableColumns}=this.props
          return(
                      
              <div>
-              <Header userMsg={classState.userMsg}          
-              />
-              <TabBar 
-              LessonsList={studentMessage.LessonsList} 
-              historyLessonsList={studentMessage.historyLessonsList} 
-              StudentList={studentMessage.StudentList}
-              LearnList={studentMessage.LearnList}
-              basicMsg={classState.basicMsg}
-              columns1={tableColumns.columns1}
-              columns2={tableColumns.columns2}
-              columns3={tableColumns.columns3} 
-              SatisifyList={studentMessage.SatisifyList}
-              columns4={tableColumns.columns4}
-              />
+            <ButtonBox/>
+                 <Search/>
+                <StudentMessage StudentList={studentMessage.StudentList} columns2={tableColumns.columns2}/>
              </div>   
          )
     }
@@ -56,4 +46,4 @@ function mapStateToProps(state,ownProps){
     }
   }
   
-export default connect(mapStateToProps,mapDispatchToProps)(Op);
+export default connect(mapStateToProps,mapDispatchToProps)(Student);

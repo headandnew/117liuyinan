@@ -47,4 +47,22 @@ export function fetchStudentInfo(id) {
       }
     }
 }
+export function fetchSatisify(mid) {
+  return {
+    SERVER_API: {
+      type: ActionTypes.FETCH_SATISIFY,
+      endpoint: '/getSatisfiledList',
+      params: {
+          mid
+      }
+    }
+  }
+}
+export function changeItem(value){
+  return {
+    type:ActionTypes.CHANGEITEM,
+    value
+  }
+}
+
 

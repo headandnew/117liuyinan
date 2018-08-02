@@ -6,6 +6,8 @@ import '../TabBar/TabBar';
 import StudentMessage from '../StudentMessage/StudentMessage';
 import ClassState from '../ClassState/ClassState'
 import BasicMsg from '../BasicMsg/BasicMsg'
+import Search from '../Search/Search'
+import SatisifyTable  from '../SatisifyTable/SatisifyTable'
 export default class TabBar extends React.Component{
 
 
@@ -15,12 +17,14 @@ export default class TabBar extends React.Component{
         const {
             LessonsList,
             historyLessonsList,
+            SatisifyList,
             StudentList,
             LearnList,
             basicMsg,
             columns1,
             columns2,
-            columns3}=this.props;
+            columns3,
+        columns4}=this.props;
         function callback(key) {
           console.log(key);
         }
@@ -34,29 +38,15 @@ export default class TabBar extends React.Component{
                             historyLessonsList={historyLessonsList} 
                             columns1={columns1} />       
     </TabPane>
-    <TabPane tab="学员档案" key="2">
-                 <ButtonBox/>
-                <StudentMessage StudentList={StudentList} columns2={columns2}/>
+    <TabPane tab="满意度反馈" key="2">
+                
+                <SatisifyTable SatisifyList={SatisifyList} columns4={columns4}/>
+              
     </TabPane>
-    <TabPane tab="上课详情" key="3">
-                 <BasicMsg basicMsg={basicMsg}/>
-                <ClassState LearnList={LearnList} columns3={columns3} />
-    </TabPane>
-  </Tabs>
-                   
-
-                </div>
-
-
-
-
-
-
-
+  
+  </Tabs>                 
+             </div>
         )
-
-
-
     }
 
     }

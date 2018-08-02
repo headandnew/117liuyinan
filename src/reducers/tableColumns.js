@@ -1,5 +1,8 @@
 import React from 'react';
 import { Icon } from 'antd';
+import { Link } from 'react-router'
+import { Popover,Button } from 'antd';
+import { Switch } from 'antd';
 
 const initState = {
   columns1: [{
@@ -9,7 +12,7 @@ const initState = {
       align: 'center',
       render: text => {
         return  <div>
-                  <Icon type="exclamation-circle" />
+               <Link to="/class">  <Icon type="exclamation-circle" /></Link>
                   <span>{text.name}</span>
                 </div>
       }
@@ -138,6 +141,13 @@ const initState = {
       dataIndex: 'nick',
       key: 'nick',
       align: 'center',
+      render: text => {
+        return  <div>
+               <Link to="/op"><span> {text} </span></Link>
+                  
+                </div>
+      }
+
     }, {
       title: '学员编号/MID',
       dataIndex: 'mid',
@@ -254,7 +264,62 @@ const initState = {
           return <span>{text}</span>
         }
       }
-    }]
+    }],
+    columns4 : [{
+      title: '教程',
+      dataIndex: 'course_name',
+      key: 'course_name',
+      align: 'center',
+      }, {
+      title: '开课时间',
+      dataIndex: 'time',
+      key: 'time',
+      align: 'center',
+      }, {
+      title: '老师',
+      dataIndex: 'teacher_info',
+      key: 'teacher_info',
+      align: 'center',
+      render:text => {
+      return <div>
+      <Popover  title="Title">
+      <Button style={{border:'none',width:'10px'}}><Icon type="smile" /></Button>
+      </Popover>
+      <span>{text.nick}</span>
+      </div>
+      }
+      },{
+      title: '满意度评分',
+      dataIndex: 'satisfied_score',
+      key: 'satisfied_score',
+      align: 'center',
+      render:text=>{
+      if( text < 5 ){
+      return <span className="Red">{text}</span>
+      }
+      else{
+      return <span>{text}</span>
+      }
+      }
+      },{
+      title: '具体反馈',
+      dataIndex: 'satisfied_detail',
+      key: 'satisfied_detail',
+      align: 'center',
+      },{
+      title: '操作',
+      dataIndex: 'reply_status',
+      key: 'reply_status',
+      align: 'center',
+      render:text => {
+      if(text == 0){
+      return <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} />
+      }
+      if(text == 1){
+      return <Icon type="check" />
+      }
+      },
+      }]
 }
 
 export default function tableColums(state = initState,action){
