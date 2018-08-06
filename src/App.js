@@ -1,23 +1,20 @@
-import React from 'react';
-import {Table} from 'antd';
-import 'antd/dist/antd.css';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux'
+import './App.css';
+import configureStore from './store/configureStore'
 
+import { Router, browserHistory } from 'react-router'
+import routes from './routes'
 
-
-export default class App extends React.Component {
-
-  constructor(props){
-    super(props);
+const store = configureStore()
+class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Router routes={routes} history={browserHistory} />
+      </Provider>
+    );
   }
+}
 
-
-    render() {
-      const { children } = this.props
-      return (
-        <div>
-          {children}
-        </div>
-      );
-    }
-  }
-  
+export default App;
