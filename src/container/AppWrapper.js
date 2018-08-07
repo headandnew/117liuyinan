@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Search from '../components/search/search'
+import HomeRemarkWrap from "./homeremarkwrap";
 
-class AppWrapper extends React.Component {
+export default class AppWrapper extends Component {
   render() {
-    const { children } = this.props
     return (
-      <div>
-        {children}
+      <div className="wrap">
+        <Search />
+        <HomeRemarkWrap />
       </div>
-    );
+      );
   }
 }
 
-export default AppWrapper;

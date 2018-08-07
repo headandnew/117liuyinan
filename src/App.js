@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux'
 import './App.css';
-import configureStore from './store/configureStore'
+import 'antd/dist/antd.css';
+import AppWrapper from './container/AppWrapper'
 
-import { Router, browserHistory } from 'react-router'
-import routes from './routes'
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
 
-const store = configureStore()
-class App extends Component {
+const store = configureStore();
+
+export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router routes={routes} history={browserHistory} />
+          <AppWrapper />
       </Provider>
-    );
+      );
   }
 }
 
-export default App;

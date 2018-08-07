@@ -1,21 +1,17 @@
-import UserCenter from './container/UserCenter';
-import StudentsLib from './container/StudentsLib';
-import ClassDetail from './container/ClassDetail';
-import AppWrapper from './container/AppWrapper';
-import ReviewHomework from './container/ReviewHomework'
+import LessonContent from './container/LessonContent'
+import ClassDetail from './container/classDetail'
+import StudenLib from './container/studentLib'
+import AppWrapper from './container/AppWrapper'
 
-const routeConfig = { 
-  path: '/',
-  component: AppWrapper,
-  indexRoute: { component: StudentsLib },
-  childRoutes: [
-    { path: 'studentsLib', component: StudentsLib },
-    { path: 'userCenter/:mid', component: UserCenter },
-    { path: 'classDetail/:classId', component: ClassDetail },
-    { path: 'reviewhomework', component: ReviewHomework}
-  ]
-}
+const routes = [{
+    path: '/',
+    component: AppWrapper,
+    indexRoute: { component: StudenLib },
+    childRoutes: [
+      { path: 'studenLib', component: StudenLib },
+      { path: 'lessonContent/:mid', component: LessonContent },
+      { path: 'classDetail', component: ClassDetail },
+    ]
+}]
 
-// /studentsLib
-
-export default routeConfig
+export default routes;

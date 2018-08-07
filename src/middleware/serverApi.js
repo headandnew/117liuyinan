@@ -1,78 +1,66 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const API_DOMAIN = 'http://xly-wkop.xiaoniangao.cn/'
-const axiosFetch = axios.create({
-  baseURL: API_DOMAIN,
-  timeout: 60000,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  }
-});
+const API_DOMAIN = 'http://xly-wkop.xiaoniangao.cn';
 
-const callServerApi = (apiParams) => {
-  const { endpoint, params } = apiParams
+const callServerApi = (endpoint, params) => {
   return new Promise((resolve, reject) => {
-    axiosFetch({
+    axios({
       method: 'POST',
-      url: endpoint,
+      url: API_DOMAIN + endpoint,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       data: params
-    })
-    .then(res => {
+    }).then(res => {
       if (res.data.ret === 1) {
-        resolve(res)
-      } else {
-        reject(res.data.errMsg)
+        return resolve(res);
       }
-    })
-    .catch(res => {
-      reject(JSON.stringify(res))
-    })
-  })
+      return reject({ errMsg: res.data.errMsg });
+    }).catch(err => {
+      return reject({ errMsg: JSON.stringify(err) });
+    });
+  });
 }
 
-const serverApi = () => next => action => {
-  if (!action.SERVER_API)
+export default store => next => action => {
+  if (!action.SERVER_API) {
     return next(action);
-  const { type, endpoint, params } = action.SERVER_API;
-  if (typeof endpoint !== 'string') {
-    throw new Error('Specify a string endpoint.');
   }
+  const {
+    type,
+    endpoint,
+    params,
+    normailzerFun
+  } = action.SERVER_API;
+
   if (typeof type !== 'string') {
-    throw new Error('Specify a string type.');
+    throw new Error('type shoudle be a string');
+  }
+  if (typeof endpoint !== 'string') {
+    throw new Error('endpoint shoudle be a string');
   }
   if (typeof params !== 'object') {
-    throw new Error('Specify a object params.');
+    throw new Error('params shoudle be a object');
   }
-
-  const { normailzerFun } = action.SERVER_API;
-  function actionWith(data) {
-    const finalAction = { ...action, ...data };
-    delete finalAction.SERVER_API;
-    return finalAction;
-  }
-  next(actionWith({
+  const { SERVER_API, ...otherParams } = action;
+  next({
     type: `${type}_REQ`,
-    __api:{endpoint,params},
-  }));
-  callServerApi({ endpoint, params })
+    ...otherParams
+  });
+
+  return callServerApi(endpoint, params)
     .then(res => {
-      const response = typeof (normailzerFun) !== 'undefined' ? normailzerFun(res.data) : res.data;
-
-      next(actionWith({
+      const response = typeof (normailzerFun) !== 'undefined' ? normailzerFun(res.data) : res.data;      
+      next({
         type: `${type}_SUC`,
-        __api:{endpoint,params},
+        ...otherParams,
         response: response
-      }));
-    })
-    .catch(errMsg => {
-      next(actionWith({
+      });
+    }).catch(err => {
+      next({
         type: `${type}_FAI`,
-        __api:{endpoint,params},
-        errMsg
-      }));
+        ...otherParams,
+        errMsg: err.errMsg
+      });
     });
-}
-
-
-
-export default serverApi
+};
