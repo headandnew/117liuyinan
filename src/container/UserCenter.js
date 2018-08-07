@@ -15,7 +15,6 @@ class UserCenter extends Component {
     userActions.fetchUserInfo({ mid })
     lessonActions.fetchLessonInfo({ mid })
     lessonActions.fetchLessonSatisfiedInfo({ mid })
-    
   }
   render() {
     const { 

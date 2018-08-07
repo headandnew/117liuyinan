@@ -11,6 +11,14 @@ function classes (state = {},action){
         ...entities.classes
       };
     }
+    case `${ActionTypes.FETCH_LESSON_INFO}_SUC`: {
+      const { history, current } = action.response;
+      return {
+        ...state,
+        ...history.entities.classes,
+        ...current.entities.classes
+      };
+    }
     default:
       return state;
   }
@@ -23,6 +31,14 @@ function teachers (state = {},action){
       return {
         ...state,
         ...entities.teachers
+      };
+    }
+    case `${ActionTypes.FETCH_LESSON_INFO}_SUC`: {
+      const { history, current } = action.response;
+      return {
+        ...state,
+        ...history.entities.teachers,
+        ...current.entities.teachers
       };
     }
     default:
@@ -53,55 +69,40 @@ function satisfiled (state = {},action){
   }
 }
 
-function classes1 (state = {},action){
+function lessons (state = {}, action){
   switch(action.type){
-    case `${ActionTypes.FETCH_LESSON_INFO}_SUC`: {
-      const entities =  action.response.entities
+    case `${ActionTypes.FETCH_LESSON_INFO}_SUC`:{
+      const { history, current } = action.response;
+
       return {
         ...state,
-        ...entities.classes1
-      };
+        ...history.entities.lessons,
+        ...current.entities.lessons
+      }
     }
     default:
       return state;
   }
 }
 
-
-function teachers1 (state = {},action){
+function students(state = {}, action){
   switch(action.type){
-    case `${ActionTypes.FETCH_LESSON_INFO}_SUC`: {
-      const entities =  action.response.entities
+    case `${ActionTypes.FETCH_STUDENT_LIST}_SUC`: {
+      const { entities } = action.response;
       return {
         ...state,
-        ...entities.teachers1
-      };
+        ...entities.students
+      }
     }
     default:
       return state;
   }
 }
-function lessonList (state = {},action){
-  switch(action.type){
-    case `${ActionTypes.FETCH_LESSON_INFO}_SUC`: {
-      const entities =  action.response.entities
-      return {
-        ...state,
-        ...entities.lessonList
-      };
-    }
-    default:
-      return state;
-  }
-}
-
 
 export default combineReducers({
   classes,
   teachers,
   satisfiled,
-  classes1,
-  teachers1,
-  lessonList,
-  
+  students,
+  lessons
 });

@@ -75,11 +75,7 @@ class SatisfiedTable extends Component {
   rowKey = (record,i) => `${record.class_info && record.class_info.id}_${i}`
 
   render() {
-
-
-    
     const { list, entities } = this.props
-    console.log(entities)
     let newList = list;
     if(list){
       newList = list.map(t=>{
