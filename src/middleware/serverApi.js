@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_DOMAIN = 'http://xly-wkop.xiaoniangao.cn';
 
-const callServerApi = (endpoint, params) => {
+const callServerApi = (endpoint, params, normalizeFuc) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'POST',
@@ -13,7 +13,7 @@ const callServerApi = (endpoint, params) => {
       data: params
     }).then(res => {
       if (res.data.ret === 1) {
-        return resolve(res);
+        return resolve(normalizeFuc ? normalizeFuc(res.data.data) : res.data.data);
       }
       return reject({ errMsg: res.data.errMsg });
     }).catch(err => {
@@ -30,7 +30,7 @@ export default store => next => action => {
     type,
     endpoint,
     params,
-    normailzerFun
+    normalizeFuc
   } = action.SERVER_API;
 
   if (typeof type !== 'string') {
@@ -42,24 +42,20 @@ export default store => next => action => {
   if (typeof params !== 'object') {
     throw new Error('params shoudle be a object');
   }
-  const { SERVER_API, ...otherParams } = action;
+
   next({
-    type: `${type}_REQ`,
-    ...otherParams
+    type: `${type}_REQ`
   });
 
-  return callServerApi(endpoint, params)
-    .then(res => {
-      const response = typeof (normailzerFun) !== 'undefined' ? normailzerFun(res.data) : res.data;      
+  return callServerApi(endpoint, params, normalizeFuc)
+    .then(response => {
       next({
         type: `${type}_SUC`,
-        ...otherParams,
-        response: response
+        response
       });
     }).catch(err => {
       next({
         type: `${type}_FAI`,
-        ...otherParams,
         errMsg: err.errMsg
       });
     });

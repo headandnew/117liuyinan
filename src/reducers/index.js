@@ -1,13 +1,6 @@
-import { combineReducers } from 'redux'
-import homeworkdata from './homeworkdata'
-import status from './status'
-import entities from './entities'
+import { combineReducers } from 'redux';
+import lessons from './lessons';
 
 export default combineReducers({
-  homeworkdata,
-  status,
-  entities,
-});
-
-
-
+  lessons
+})

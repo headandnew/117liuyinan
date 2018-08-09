@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
 import 'antd/dist/antd.css';
-import AppWrapper from './container/AppWrapper'
 
-import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
+export default class App extends React.Component {
 
-const store = configureStore();
-
-export default class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-          <AppWrapper />
-      </Provider>
-      );
+      <div>
+        {this.props.children}
+      </div>
+    );
   }
 }
-
