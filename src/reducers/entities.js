@@ -1,23 +1,10 @@
 import { combineReducers } from 'redux'
-import * as ActionTypes from '../const/ActionType'
+import ActionTypes from '../const/ActionTypes'
 
-function author (state = {},action){
-  switch(action.type){
-    case ActionTypes.FETCH_HOMEWORK_INFO_SUC: {
-      const entities =  action.response.entities
-      return {
-        ...state,
-        ...entities.autor
-      };
-    }
-    default:
-      return state;
-  }
-}
 
 function classes (state = {},action){
   switch(action.type){
-    case ActionTypes.FETCH_HOMEWORK_INFO_SUC: {
+    case `${ActionTypes.FETCH_LESSON_SATISFIED_INFO}_SUC`: {
       const entities =  action.response.entities
       return {
         ...state,
@@ -29,14 +16,13 @@ function classes (state = {},action){
   }
 }
 
-function comments (state = {},action){
+function teachers (state = {},action){
   switch(action.type){
-    case ActionTypes.FETCH_HOMEWORK_INFO_SUC: {
+    case `${ActionTypes.FETCH_LESSON_SATISFIED_INFO}_SUC`: {
       const entities =  action.response.entities
-      console.log(entities)
       return {
         ...state,
-        ...entities.comments
+        ...entities.teachers
       };
     }
     default:
@@ -44,14 +30,23 @@ function comments (state = {},action){
   }
 }
 
-function homeworkList (state = {},action){
+function satisfiled (state = {},action){
   switch(action.type){
-    case ActionTypes.FETCH_HOMEWORK_INFO_SUC: {
+    case `${ActionTypes.FETCH_LESSON_SATISFIED_INFO}_SUC`: {
       const entities =  action.response.entities
       return {
         ...state,
-        ...entities.homeworkList
+        ...entities.satisfiled
       };
+    }
+    case `${ActionTypes.REPLY_USER_FEED_BACK}`: {
+      const { time } = action.params
+      
+      const targetItem = { ...state[time] }
+      targetItem.reply_status = 1
+
+      const nextState = { ...state, [time]: targetItem }
+      return nextState
     }
     default:
       return state;
@@ -60,8 +55,6 @@ function homeworkList (state = {},action){
 
 export default combineReducers({
   classes,
-  homeworkList,
-  comments,
-  author
+  teachers,
+  satisfiled
 });
-

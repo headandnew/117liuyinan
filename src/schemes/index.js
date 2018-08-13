@@ -1,5 +1,6 @@
 import { schema } from 'normalizr';
 
+
 const classes = new schema.Entity('classes', {}, {
   idAttribute: 'id'
 });
@@ -13,25 +14,5 @@ const satisfiled = new schema.Entity('satisfiled',{
 },{
   idAttribute:'time'
 })
-
-const student = new schema.Entity('students',{},{
-  idAttribute:'mid'
-})
-
-// lesson
-
-const lesson = new schema.Entity('lessons',{
-  classInfo: classes,
-  teacherInfo: teacher
-},{
-  idAttribute: 'id'
-})
-
-
-
-export const LESSONS = [ lesson ];
-
-export const STUDENTLIST = [student];
-
 
 export const SATISFILEDLIST = [ satisfiled ];

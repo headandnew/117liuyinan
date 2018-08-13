@@ -11,7 +11,7 @@ class StudentsLib extends Component {
     userActions.fetchStudentList()
   }
   render () {
-    const { studentList, userActions, entities } = this.props
+    const { studentList, userActions } = this.props
     const options = [
       {
         value: 'mid',
@@ -25,7 +25,7 @@ class StudentsLib extends Component {
     return (
       <div>
         <StudentSearcher options={options} onSearch={userActions.searchStudentListByOption} />
-        <StudentTable entities={entities} list={studentList} />
+        <StudentTable list={studentList} />
       </div>
     )
   }
@@ -46,11 +46,9 @@ const mapStateToProps = state => {
     studentLib: { 
       list: studentList,
       filterOption
-    },
-    entities
+    }
   } = state
   return {
-    entities,
     studentList: getAfterFilterList(studentList, filterOption)
   }
 }

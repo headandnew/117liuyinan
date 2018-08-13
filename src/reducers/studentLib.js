@@ -4,8 +4,9 @@ import ActionTypes from '../const/ActionTypes'
 function list(state = [], action) {
   switch (action.type) {
     case `${ActionTypes.FETCH_STUDENT_LIST}_SUC`:
-      const result = action.response.result;
-      return result;
+      return [ 
+        ...action.response.data
+      ]
     default:
       return state
   }

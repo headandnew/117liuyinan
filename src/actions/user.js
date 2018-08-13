@@ -1,6 +1,4 @@
 import ActionTypes from '../const/ActionTypes'
-import { normalize } from '../../node_modules/normalizr';
-import * as schemas from '../schemes'
 
 export default {
   fetchUserInfo: (params) => {
@@ -21,8 +19,7 @@ export default {
         type: ActionTypes.FETCH_STUDENT_LIST,
         endpoint: '/getStudentList',
         params: {
-        },
-        normailzerFun:response=>normalize(response.data,schemas.STUDENTLIST)
+        }
       }
     }
   },
